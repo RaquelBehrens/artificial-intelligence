@@ -1,0 +1,302 @@
+(Cities)
+(geiranger
+  <:IS-A City>
+)
+(loen
+  <:IS-A City>
+)
+(kristiansand
+  <:IS-A City>
+)
+(kragerø
+  <:IS-A City>
+)
+(oslo
+  <:IS-A City>
+)
+(trondheim
+  <:IS-A City>
+)
+(kirkenes
+  <:IS-A City>
+)
+(stavanger
+  <:IS-A City>
+)
+
+(Temperature)
+('26_to_11'
+  <:IS-A Temperature>
+)
+('18_to_minus5'
+  <:IS-A Temperature>
+)
+('20_to_minus2'
+  <:IS-A Temperature>
+)
+('0_to_minus12'
+  <:IS-A Temperature>
+)
+
+(TypeOfAttraction)
+(family
+  <:IS-A TypeOfAttraction>
+)
+(solo
+  <:IS-A TypeOfAttraction>
+)
+(group
+  <:IS-A TypeOfAttraction>
+)
+
+(Season)
+(summer
+  <:IS-A Season>
+  <:Temperature '26_to_11'>
+)
+(winter
+  <:IS-A Season>
+  <:Temperature '0_to_minus12'>
+)
+(fall
+  <:IS-A Season>
+  <:Temperature '20_to_minus2'>
+)
+(spring
+  <:IS-A Season>
+  <:Temperature '18_to_minus5'>
+)
+
+(Attraction)
+(hiking
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction solo>
+  <:City geiranger>
+  <:City loen>
+  <:City stavanger>
+)
+(fjord_sightseeing
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City geiranger>
+  <:City trondheim>
+)
+(fjord_cruise
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City geiranger>
+
+)
+(kayaking
+  <:IS-A Attraction>
+  <:Season summer>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:City geiranger>
+  <:City trondheim>
+)
+(rafting
+  <:IS-A Attraction>
+  <:Season summer>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:City geiranger>
+  <:City trondheim>
+)
+(museum
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kristiansand>
+  <:City kragerø>
+  <:City oslo>
+  <:City trondheim>
+  <:City kirkenes>
+  <:City stavanger>
+)
+(skylift
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:City loen>
+)
+(via_ferrata
+  <:IS-A Attraction>
+  <:Season summer>
+  <:Season spring>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:City loen>
+)
+(camping
+  <:IS-A Attraction>
+  <:Season summer>
+  <:Season spring>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:City loen>
+)
+(park
+  <:IS-A Attraction>
+  <:Season summer>
+  <:Season spring>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kristiansand>
+  <:City kragerø>
+)
+(beach
+  <:IS-A Attraction>
+  <:Season summer>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kristiansand>
+  <:City stavanger>
+)
+(church
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kristiansand>
+  <:City kragerø>
+  <:City trondheim>
+)
+(opera_house
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City oslo>
+)
+(fortress
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City oslo>
+  <:City kragerø>
+  <:City trondheim>
+)
+(botanical_garden
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City oslo>
+)
+(pub
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction solo>
+  <:City trondheim>
+)
+(seafood
+  <:IS-A Attraction>
+  <:Season spring>
+  <:Season summer>
+  <:Season fall>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kristiansand>
+  <:City stavanger>
+)
+(ferry
+  <:IS-A Attraction>
+  <:Season summer>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City trondheim>
+)
+(dogsled_tour
+  <:IS-A Attraction>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kirkenes>
+)
+(snow_mobiling
+  <:IS-A Attraction>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kirkenes>
+)
+(ice_fishing
+  <:IS-A Attraction>
+  <:Season winter>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kirkenes>
+)
+(northern_lights
+  <:IS-A Attraction>
+  <:Season winter>
+  <:Season fall>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City trondheim>
+  <:City kirkenes>
+)
+(lighthouse
+  <:IS-A Attraction>
+  <:Season summer>
+  <:TypeOfAttraction group>
+  <:TypeOfAttraction family>
+  <:TypeOfAttraction solo>
+  <:City kragerø>
+)

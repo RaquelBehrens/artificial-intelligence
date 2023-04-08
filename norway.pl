@@ -8,10 +8,6 @@ city(trondheim).
 city(kirkenes).
 city(stavanger).
 
-daylight(six).
-daylight(eleven).
-daylight(twenty).
-
 temperature('26_to_11').
 temperature('18_to_minus5').
 temperature('20_to_minus2').
@@ -19,7 +15,8 @@ temperature('0_to_minus12').
 
 /* Attractions */
 attraction(hiking).
-attraction(fjord).
+attraction(fjord_sightseeing).
+attraction(fjord_cruise).
 attraction(kayaking).
 attraction(rafting).
 attraction(museum).
@@ -74,7 +71,8 @@ seasonAttraction(winter, ice_fishing).
 seasonAttraction(winter, northern_lights).
 
 seasonAttraction(spring, hiking).
-seasonAttraction(spring, fjord).
+seasonAttraction(spring, fjord_sightseeing).
+seasonAttraction(spring, fjord_cruise).
 seasonAttraction(spring, museum).
 seasonAttraction(spring, skylift).
 seasonAttraction(spring, camping).
@@ -85,9 +83,11 @@ seasonAttraction(spring, fortress).
 seasonAttraction(spring, botanical_garden).
 seasonAttraction(spring, seafood).
 seasonAttraction(spring, pub).
+seasonAttraction(spring, via_ferrata).
 
 seasonAttraction(summer, hiking).
-seasonAttraction(summer, fjord).
+seasonAttraction(summer, fjord_sightseeing).
+seasonAttraction(summer, fjord_cruise).
 seasonAttraction(summer, kayaking).
 seasonAttraction(summer, rafting).
 seasonAttraction(summer, museum).
@@ -106,7 +106,8 @@ seasonAttraction(summer, ferry).
 seasonAttraction(summer, lighthouse).
 
 seasonAttraction(fall, hiking).
-seasonAttraction(fall, fjord).
+seasonAttraction(fall, fjord_sightseeing).
+seasonAttraction(fall, fjord_cruise).
 seasonAttraction(fall, kayaking).
 seasonAttraction(fall, rafting).
 seasonAttraction(fall, museum).
@@ -144,6 +145,7 @@ activityGroup(hiking, group).
 activityGroup(hiking, solo).
 activityGroup(kayaking, group).
 activityGroup(rafting, group).
+activityGroup(museum, solo).
 activityGroup(museum, group).
 activityGroup(museum, family).
 activityGroup(skylift, group).
@@ -195,6 +197,7 @@ activityGroup(lighthouse, family).
 cityAttraction(geiranger, fjord_sightseeing).
 cityAttraction(geiranger, fjord_cruise).
 cityAttraction(geiranger, rafting).
+cityAttraction(geiranger, kayaking).
 cityAttraction(geiranger, hiking).
 
 cityAttraction(loen , skylift).
@@ -207,6 +210,7 @@ cityAttraction(kristiansand, museum).
 cityAttraction(kristiansand, zoo).
 cityAttraction(kristiansand, church).
 cityAttraction(kristiansand, beach).
+cityAttraction(kristiansand, seafood).
 cityAttraction(kristiansand, park).
 
 cityAttraction(kragerø, museum).
@@ -229,16 +233,18 @@ cityAttraction(trondheim, ferry).
 cityAttraction(trondheim, northern_lights).
 cityAttraction(trondheim, fortress).
 cityAttraction(trondheim, museum).
+cityAttraction(trondheim, kayaking).
 
 cityAttraction(kirkenes, northern_lights).
 cityAttraction(kirkenes, dogsled_tour).
-cityAttraction(kirkenes, snowmobiling).
+cityAttraction(kirkenes, snow_mobiling).
 cityAttraction(kirkenes, ice_fishing).
 cityAttraction(kirkenes, museum).
 
 cityAttraction(stavanger, museum).
 cityAttraction(stavanger, hiking).
 cityAttraction(stavanger, beach).
+cityAttraction(stavanger, seafood).
 cityAttraction(stavanger, boathouse).
 cityAttraction(stavanger, cuisine).
 cityAttraction(stavanger, church).
