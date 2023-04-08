@@ -1,30 +1,31 @@
-(Cities)
+(city 
+  <:IS-A landInNorway>)
+
 (geiranger
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (loen
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (kristiansand
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (kragerø
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (oslo
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (trondheim
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (kirkenes
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 (stavanger
-  <:IS-A City>
+  <:INSTANCE-OF city>
 )
 
-(Temperature)
 ('26_to_11'
   <:IS-A Temperature>
 )
@@ -38,7 +39,6 @@
   <:IS-A Temperature>
 )
 
-(TypeOfAttraction)
 (family
   <:IS-A TypeOfAttraction>
 )
@@ -49,7 +49,6 @@
   <:IS-A TypeOfAttraction>
 )
 
-(Season)
 (summer
   <:IS-A Season>
   <:Temperature '26_to_11'>
@@ -67,7 +66,6 @@
   <:Temperature '18_to_minus5'>
 )
 
-(Attraction)
 (hiking
   <:IS-A Attraction>
   <:Season spring>
