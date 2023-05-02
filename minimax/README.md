@@ -50,9 +50,9 @@ Now you must prompt, in this directory:
 
 Now you must choose an option between:
 
-1 - Play with AI
-2 - Observe 2 AIs play with each other
-3 - Solve with iterative deepening (i.e. combine breadth-first search with depth-first search)
+- Play with AI
+- Observe 2 AIs play with each other
+- Solve with iterative deepening (i.e. combine breadth-first search with depth-first search)
 
 To see further meaning of iterative deepening of easyAI's function, please access easyAI [documentation](https://github.com/Zulko/easyAI).
 
@@ -66,9 +66,13 @@ First you have to type the size of the board. We recommend 3.
 
 Let's say you typed 3. You have the following board:
 
-. . . 00 01 02
-. . . 03 04 05
-. . . 06 07 08
+<pre>
+Board        Position
+
+. . .        00 01 02
+. . .        03 04 05
+. . .        06 07 08
+</pre>
 
 The player 1 will start (the AI).
 
@@ -92,9 +96,13 @@ First you have to type the size of the board. We recommend 3.
 
 Let's say you typed 3. You have the following board:
 
-. . . 00 01 02
-. . . 03 04 05
-. . . 06 07 08
+<pre>
+Board        Position
+
+. . .        00 01 02
+. . .        03 04 05
+. . .        06 07 08
+</pre>
 
 Now you can observe in the temrinal who won the game, and the moves of the players!
 
@@ -114,6 +122,7 @@ Now you can observe r, d and m appearing in the terminal.
 
 For a board of size 3x3, we have the following result:
 
+<pre>
 d:2, a:0, m:(0, 1)
 d:3, a:0, m:(0, 1)
 d:4, a:0, m:(0, 1)
@@ -136,5 +145,8 @@ d:19, a:0, m:(0, 1)
 r: 0
 d: 19
 m: (0, 1)
+</pre>
 
 Meaning that the first player cannot always win, the wins will be in 19 moves, and the first player's move should be **(0, 1)**.
+
+It takes at least half an hour to finish this execution.
