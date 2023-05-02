@@ -1,4 +1,4 @@
-# Relatório
+# Report on INE5430 - Artificial Intelligence - List 3
 
 ## Students:
 
@@ -17,11 +17,16 @@ The group used the framework [EasyAI](https://github.com/Zulko/easyAI), see furt
 
 You have a board with a certain amount of dots, for example, a 5x5 board with dots in each position, like this:
 
-. . . . . 00 01 02 03 04
-. . . . . 05 06 07 08 09
-. . . . . 10 11 12 13 14
-. . . . . 15 16 17 18 19
-. . . . . 20 21 22 23 24
+<pre>
+
+Board            Positions
+
+. . . . .        00 01 02 03 04
+. . . . .        05 06 07 08 09
+. . . . .        10 11 12 13 14
+. . . . .        15 16 17 18 19
+. . . . .        20 21 22 23 24
+</pre>
 
 Therefore, you have to draw edges between the dots, to form boxes. Each box your edges form, will be a point for you. But all the edges of the box must be yours.
 
@@ -31,7 +36,7 @@ So let's play!
 
 ##
 
-### How do I execute the file?
+## How do I execute the file?
 
 You must have python3 installed in your computer.
 
@@ -53,7 +58,7 @@ To see further meaning of iterative deepening of easyAI's function, please acces
 
 ##
 
-## Choosing option 1: Play with AI
+### Choosing option 1: Play with AI
 
 You are the player 2.
 
@@ -81,7 +86,7 @@ When you finish the game, the board will inform who won. If there is a tie, you 
 
 ##
 
-## Choosing option 2: Observe 2 AIs play with each other
+### Choosing option 2: Observe 2 AIs play with each other
 
 First you have to type the size of the board. We recommend 3.
 
@@ -95,7 +100,7 @@ Now you can observe in the temrinal who won the game, and the moves of the playe
 
 ##
 
-## Choosing option 3: Solve with iterative deepening
+### Choosing option 3: Solve with iterative deepening
 
 To see further meaning of iterative deepening of easyAI's function, please access easyAI [documentation](https://github.com/Zulko/easyAI).
 
