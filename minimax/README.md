@@ -1,14 +1,10 @@
 # Relatório
 
-### Bruna Carpes de Freitas
-
-### Larissa Gremelmaier Rosa
-
-### Maren Freland Arn
-
-### Raquel Cristina Schaly Behrens
+## Students: Bruna Carpes de Freitas, Larissa Gremelmaier Rosa, Maren Freland Arn, Raquel Cristina Schaly Behrens
 
 The group used the framework [EasyAI](https://github.com/Zulko/easyAI), see further documentation [here](http://zulko.github.io/easyAI/), to develop our version of the Dots Game and use artificial inteligence to play against the computer, or observe the computer play with itself.
+
+##
 
 ### But how does our Dots Game work?
 
