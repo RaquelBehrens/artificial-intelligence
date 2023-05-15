@@ -364,17 +364,13 @@ attractionSugestion(Attraction, medium, mediumexperience) :- seasonAttraction(sp
 
 /*
 Rule 10
-
 Which are the attractions I can do in a specific city on a specific weather? 
-
   IF city = City AND season = Season:
     IF X is a city attraction
     AND X is a season attraction
     THEN X
-
 Example:
 checkCitySeasonAttraction(trondheim, summer, X).
-
 */
 checkCitySeasonAttraction(City, Season, X) :- city(City), season(Season), attraction(X),
                                                     cityAttraction(City, X),  seasonAttraction(Season, X).
@@ -382,80 +378,163 @@ checkCitySeasonAttraction(City, Season, X) :- city(City), season(Season), attrac
 
 /*
 Rule 11
-
 Which are the attractions I can do with a certain group on a certain weather? 
-
   IF group = Group AND season = Season:
     IF X is a group attraction
     AND X is a season attraction
     THEN X
-
 Example:
 checkGroupSeasonAttraction(family, summer, X).
-
 */
 checkGroupSeasonAttraction(Group, Season, X) :- attractionCategory(Group), season(Season), attraction(X),
                                                 activityGroup(X, Group), seasonAttraction(Season, X).
 
 
 
+/*
+Rule 12
+Which attractions can I do in a specific temperature range?
+  IF temperature = Temperature
+  THEN X is an attraction
+  AND X has a danger level compatible with Temperature
+Example:
+checkTemperatureAttraction('26_to_11', X).
+*/
+checkTemperatureAttraction(Temperature, X) :- temperature(Temperature), attraction(X),
+                                              attractionDangerLevel(X, DangerLevel),
+                                              seasonTemperature(Season, Temperature),
+                                              seasonAttraction(Season, X).
+
+/* 
+Rule 13
+Find attractions suitable for a specific city and temperature range
+If city = City and temperature = Temperature
+Then X is an attraction available in City and has a danger level compatible with Temperature
+Example:
+checkCityTemperatureAttraction(oslo, '0_to_minus12', X).
+*/
+checkCityTemperatureAttraction(City, Temperature, X) :- city(City), temperature(Temperature), attraction(X),
+                                                        cityAttraction(City, X), attractionDangerLevel(X, DangerLevel),
+                                                        seasonTemperature(Season, Temperature), seasonAttraction(Season, X).
+
+/*
+Rule 14
+Find attractions suitable for a specific city and season
+If city = City and season = Season
+Then X is an attraction available in City and is compatible with Season
+Example:
+checkCitySeasonAttraction(oslo, summer, X).
+*/
+checkCitySeasonAttraction(City, Season, X) :- city(City), season(Season), attraction(X),
+                                              cityAttraction(City, X), seasonAttraction(Season, X).
+
+/*
+Rule 15
+Suggest the season for a specific activity in a city
+If activity = Activity and city = City
+Then X is a season suitable for Activity in City
+Example:
+suggestSeasonForActivity(hiking, oslo, X).
+*/
+suggestSeasonForActivity(Activity, City, X) :- attraction(Activity), city(City), cityAttraction(City, Activity),
+                                               season(X), seasonAttraction(X, Activity).
 
 
 /* 
+Rule 16
+Suggest when and where to go for a specific activity:
+If activity = Activity
+Then City is a city where Activity is available,
+     Season is a season suitable for Activity in City,
+     Temperature is the temperature range in Season,
+     DangerLevel is the danger level of Activity
+Example:
+suggestWhenWhereForActivity(hiking, City, Season, Temperature, DangerLevel).
+*/
+suggestWhenWhereForActivity(Activity, City, Season, Temperature, DangerLevel) :- attraction(Activity), city(City), cityAttraction(City, Activity),
+                                                                                 season(Season), seasonAttraction(Season, Activity),
+                                                                                 seasonTemperature(Season, Temperature), attractionDangerLevel(Activity, DangerLevel).
+/* 
+Rule 17 
+Request suggestions for attractions to visit based on type
+To request suggestions, use the following command:
+attractionSuggestion(Attraction, Type).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                      %%    
-%%    %%   %%    %%%%%%%%    %%%%%%%    %%
-%%    %%   %%    %%          %%   %%    %%
-%%    %%   %%    %%%%%%%%    %%   %%    %%
-%%    %%   %%          %%    %%   %%    %%
-%%    %%%%%%%    %%%%%%%%    %%%%%%%    %%
-%%                                      %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Type options: deepadventure, sightseeing, mediumexperience
+IF Type = deepadventure
+*/
 
+attractionTypeSuggestion(Attraction, deepadventure) :- attraction(Attraction), attractionDangerLevel(Attraction, high), seasonAttraction(_, Attraction).
+
+/* 
+Rule 18
+IF Type = sightseeing
+*/
+attractionTypeSuggestion(Attraction, sightseeing) :- attraction(Attraction), attractionDangerLevel(Attraction, low), seasonAttraction(_, Attraction).
+
+/*
+Rule 19
+IF Type = mediumexperience
+*/
+attractionTypeSuggestion(Attraction, mediumexperience) :- attraction(Attraction), attractionDangerLevel(Attraction, medium), seasonAttraction(_, Attraction).
+
+/* 
+Rule 20
+City Suggestion for Attraction
+To get a city suggestion for a specific attraction, use the following command:
+citySuggestionForAttraction(Attraction, City).
+*/
+
+citySuggestionForAttraction(Attraction, City) :- attraction(Attraction), city(City), cityAttraction(City, Attraction).
+
+
+/* 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                               %%    
+%%    %%   %%    %%%%%%%%    %%%%%%%%    %%%%%%%%    %%%%%%%%    %%
+%%    %%   %%    %%          %%    %%    %%          %%          %%
+%%    %%   %%    %%%%%%%%    %%%%%%%%    %%  %%%%    %%%%%%%%    %%
+%%    %%   %%          %%    %%    %%    %%    %%    %%          %%
+%%    %%%%%%%    %%%%%%%%    %%    %%    %%%%%%%%    %%%%%%%%    %%
+%%                                                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 1. To request suggestions for attractions to visit, use the following command:
-
 attractionSugestion(Attraction, <CLIMATE>, <TYPE>).
-
 CLIMATE can be: cold, hot, medium
 TYPE can be: deepadventure, sightseeing, mediumexperience
 
-
-
-
 2. To check which are the attractions to go on a certain season in an specific city, type the following command:
-
 checkCitySeasonAttraction(<CITY>, <SEASON>, X).
-
 Where City can be: geiranger, loen, kristiansand, kragerø, oslo, trondheim, kirkenes, stavanger.
-
 and Season can be: summer, fall, winter or spring.
 
-
-
-
 3. Where can I see the northern lights, and in what season? What is the temperature average for the season? 
-
 cityAttraction(X, northern_lights).
 seasonAttraction(X, northern_lights).
 seasonTemperature(season, X). 
 
-
-
-
 4. What activities can I do with a family on the spring? 
-
 checkGroupSeasonAttraction(family, summer, X).
-
-
-
-
 If you want more than one suggestion, type ";" so the program will continue to suggest attractions!
 
+5. Which attractions can I do in a specific temperature range?
+checkTemperatureAttraction('26_to_11', X).
+
+6. Find attractions suitable for a specific city and temperature range or season
+checkCityTemperatureAttraction(oslo, '0_to_minus12', X).
+checkCitySeasonAttraction(oslo, summer, X).
+
+7. When should I travel to Norway to see the northern lights?
+This rule takes an activity and a city as inputs and suggests the season that is suitable for that activity in the given city. 
+By calling the predicate suggestSeasonForActivity(hiking, oslo, X), you will get the suggested season for hiking in Oslo
+
+8. When and where should I travel to Norway to do a certain activity?
+suggestWhenWhereForActivity(hiking, City, Season, Temperature, DangerLevel).
+
+9. What activities can I do if I want a specific type of activity?
+attractionSuggestion(Attraction, Type).
+
+10. Which city for a specific attraction?
+citySuggestionForAttraction(Attraction, City).
 */
-
-
-
-
-
