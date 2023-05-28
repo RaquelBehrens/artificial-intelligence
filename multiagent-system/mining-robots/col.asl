@@ -1,103 +1,111 @@
 pos(boss, 15, 15).
 checking_cells.
 resource_needed(1).
-is_collecting.
-
 
 +my_pos(X, Y) 
    : checking_cells & not building_finished
    <- !check_for_resources.
    
-   
+//If wants resource R, but found S, and S is a future resource, then tell all agents that found a resource not needed
 +!check_for_resources 
-   : resource_needed(R) & found(S) & R \== S & my_pos(X, Y)
-   <- //Telling all agents It found resource not nedded, sending place and which resource
-      +resource_history(X, Y, S);
-      .broadcast(tell, resource_history(X, Y, S));
+   : resource_needed(R) & found(S) & R < S & my_pos(X, Y)
+   <- +resource_history(S, X, Y);
+      .broadcast(tell, resource_history(S, X, Y));
    	  move_to(next_cell).
-   	  
-+resource_history(X, Y, R) : true
-   // Manda agente para a posição X, Y onde o recurso foi encontrado
-   <- true.
 
-
+//If wants resource R, and has a record of resource R in certain location, go get resource and tell others
 +!check_for_resources 
-   : resource_needed(R) & found(R) & my_pos(X, Y) & not my_res(R, X, Y)
+   : resource_needed(R) & resource(R, X, Y)
    <- !stop_checking;
-      //Telling all agents It found resource needed, sending place and which resource
-      .println("Resource needed at X Y: ", X, " ", Y);
-      .broadcast(tell, resource(X, Y, R));
-      +my_res(R, X, Y);
-      !take(R, boss);
-      !continue_mine.
-      
-+!check_for_resources 
-   : resource_needed(R) & found(R) & my_pos(X, Y) & my_res(R, X, Y)
-   <- !stop_checking;
-      //Telling all agents It found resource needed, sending place and which resource
-      .println("Resource needed at X Y: ", X, " ", Y);
-      .broadcast(tell, resource(X, Y, R));
-      !take(R, boss);
+      .broadcast(tell, resource(R, X, Y));
+      !get_resource(R, X, Y);
       !continue_mine.
 
+//If wants resource R, and has a record of history, go to get resource and tell others
 +!check_for_resources 
-   : resource_needed(R) & not found(R) & my_pos(X, Y) & my_res(R, X, Y)
-   <- // Avisa que recurso não foi mais encontrado, passando local e o recurso, para todos os agentes
-      .broadcast(untell, resource(X, Y, R));
+   : resource_needed(R) & resource_history(R, X, Y)
+   <- .broadcast(tell, resource(R, X, Y));
+      .broadcast(untell, resource_history(R, X, Y));
+      -resource_history(R, X, Y);
+      !get_resource(R, X, Y).
+
+//If wants a resource R, and found this R, start taking it and let the others know
++!check_for_resources 
+   : resource_needed(R) & found(R) & my_pos(X, Y)
+   <- !stop_checking;
+      .broadcast(tell, resource(R, X, Y));
+      !take(R, boss);
+      !continue_mine.
+
+//If is in it's place, but did not find resource, tell others that it is over
++!check_for_resources 
+   : not found(R) & my_pos(X, Y) & my_res(R, X, Y)
+   <- .broadcast(untell, resource(R, X, Y));
+      .broadcast(untell, my_res(R, X, Y));
+      .broadcast(untell, resource_history(R, X, Y));
+      -resource_history(R, X, Y);
+      -my_res(R, X, Y);
+      -resource(R, X, Y);
       move_to(next_cell);
-      -my_res(R, X, Y).
-      
+      !continue_mine.
+
+//If is in a position, but no record of a resource in this position, and did not find anything, continue moving
 +!check_for_resources 
-   : resource_needed(R) & not found(R) & my_pos(X, Y) & not my_res(R, X, Y)
+   : my_pos(X, Y) & not my_res(R, X, Y)
    <- move_to(next_cell).
+   
+//Being notified that R is a resource needed, and has record of this resource, go get this resource
++resource_needed(R) 
+   : resource(R, X, Y)
+   <- !get_resource(R, X, Y).
 
-
-+resource(X, Y, R) 
-   : not my_res(_, _, _)
-   <- .println("Going to get resource found by another at X Y: ", X, " ", Y);
-      .println("The resource type is: ", R);
-      .wait(250);
-      !get_resource(X, Y, R).
+//Being notified of a resource, and is neither after another resource nor is in the middle of something, get resource
++resource(R, X, Y) 
+   : not my_res(_, _, _) & not pos(back, _, _) & checking_cells
+   <- !get_resource(R, X, Y).
       
-+!get_resource(X, Y, R)
+//If if not after another resource, go get the resource and record that is after a resource
++!get_resource(R, X, Y)
    : not my_res(_, _, _)
-   <- // Agent stop checking
+   <- +my_res(R, X, Y);
+      // Agent stop checking
       !stop_checking;
       // Agent goes to resource
-      +my_res(X, Y, R);
-      !go(X, Y, R).
-
-+resource_needed(R) 
-   : resource(X, Y, R)
-   <- !go(X, Y).
+      !go(R, X, Y).
    
--resource(X, Y, R) 
-   : resource(X, Y, R) | my_res(X, Y, R)
-   <- .drop_desire(go(X,Y,R));
-   	  -resource(X, Y, R);
-   	  -my_res(X, Y, R);
+//Being notified that can exclude record of a resource, if has this record or is getting this resource in this location, stop doing so and go back to search
+-resource(R, X, Y) 
+   : resource(R, X, Y) | my_res(R, X, Y)
+   <- .drop_desire(go(R, X, Y));
+      .broadcast(untell, resource(R, X, Y));
+   	  .broadcast(untell, my_res(R, X, Y));
+   	  .broadcast(untell, resource_history(R, X, Y));
+      -resource_history(R, X, Y);
+   	  -resource(R, X, Y);
+   	  -my_res(R, X, Y);
    	  !continue_mine.
 
-//Agent reaches resource and has this resource in history, that means, got the information by another
-+!go(X, Y, R) 
-   : my_pos(X, Y) & found(R) & resource(X, Y, R)
+//If has been told to go after a resource, and is in this position, and found this resource, take this to the boss and come back
++!go(R, X, Y) 
+   : my_pos(X, Y) & found(R)
    <- !take(R, boss);
-      !go(X, Y, R).
+      !go(R, X, Y).
 
-//Agent reaches resource and has this resource in history, that means, got the information by another
-+!go(X, Y, R) 
-   : my_pos(X, Y) & not found(R) & resource(X, Y, R)
-   <- // Avisa que recurso não foi mais encontrado, passando local e o recurso, para todos os agentes
-      .broadcast(untell, resource(X, Y, R));
-   	  -resource(X, Y, R);
-      -my_res(X, Y, R);
+//If has been told to go after a resource, and is in this position, but did not find the resource, let the others know that the resource does not exist there
++!go(R, X, Y) 
+   : my_pos(X, Y) & not found(R)
+   <- .broadcast(untell, resource(R, X, Y));
+   	  .broadcast(untell, my_res(R, X, Y));
+   	  .broadcast(untell, resource_history(R, X, Y));
+      -resource_history(R, X, Y);
+   	  -resource(R, X, Y);
+      -my_res(R, X, Y);
       !continue_mine.
 
-//Go to resource until finds it
-+!go(X, Y, R) : true
-   <- .println("Going towards resource at X Y: ", X, " ", Y);
-      move_towards(X, Y);
-      !go(X, Y, R).
+//If has been told to go after a resource, and is not in the position yet, move towards this position and continue going
++!go(R, X, Y) : true
+   <- move_towards(X, Y);
+      !go(R, X, Y).
 
 +!go(Position) 
    : pos(Position, X, Y) & my_pos(X, Y)
@@ -122,27 +130,22 @@ is_collecting.
    <- mine(R);
       !go(B);
       drop(R).
-      
-+!continue_mine 
-   : resource_needed(R) & resource_history(X, Y, R)
-   <- !go(back);
-      -pos(back,X,Y);
-      +checking_cells;
-      !go(X, Y, R);
-      -resource_history(X, Y, R);
-      !check_for_resources.
 
-+!continue_mine : true
++!continue_mine : pos(back, X, Y)
    <- !go(back);
       -pos(back,X,Y);
       +checking_cells;
+      !check_for_resources.
+      
++!continue_mine : true
+   <- +checking_cells;
       !check_for_resources.
 
 @psf[atomic]
 +!search_for(NewResource) 
    : resource_needed(OldResource)
    <- +resource_needed(NewResource);    
-      -resource(_, _, OldResource);
+      -resource(OldResource, _, _);
       -resource_needed(OldResource).
 
 
